@@ -1,0 +1,160 @@
+{% extends 'base_auth.html' %}
+
+{% load static %}
+
+{% block content %}
+    <style>
+        body {
+            background-image: url("{% static 'img/bg1.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        form {
+            margin-top: 50px;
+        }
+
+        .center-align {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            width: 100% !important;
+        }
+
+        .login-card .card-body {
+            padding: 2rem;
+        }
+
+        .login-card .h4 {
+            font-size: 1.5rem;
+        }
+
+        .login-card .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-card .btn-user {
+            height: calc(2.2em + 1.25rem + 2px);
+            font-size: 1.25rem;
+        }
+        .login-card {
+            transform: scale(1.3); /* Adjust the scale value to control the zoom level */
+        }
+    </style>
+
+    <link href="{% static 'mode/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="{% static 'mode/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <div class="container center-align">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-lg-12 col-md-9">
+                    <div class="card o-hidden border-0 shadow-lg my-5 login-card">
+                        <div class="card-body p-0">
+                            <div class="row">
+                                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                                <div class="col-lg-6">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4">智慧門鎖登入</h1>
+                                        </div>
+                                        <form class="user" action="{% url 'login' %}" method="post">
+                                            {% csrf_token %}
+                                            {% include 'partials/_messages.html' %}
+
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-user" placeholder="Username" name="username" id="usernameField" value="{{ fieldValues.username }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="password" class="form-control form-control-user" placeholder="Password" name="password" id="passwordField">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    <input type="checkbox" class="custom-control-input" id="rememberUsername" name="remember_username">
+                                                    <label class="custom-control-label" for="rememberUsername">記住使用者帳號</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    <input type="checkbox" class="custom-control-input" id="rememberMe" name="remember">
+                                                    <label class="custom-control-label" for="rememberMe">記住我</label>
+                                                </div>
+                                            </div>
+    
+                                            <input type="submit" value="登入" class="btn btn-primary btn-user btn-block">
+                                        </form>
+    
+                                        <hr>
+                                        <div class="text-center">
+                                            <a class="small" href="{% url 'forgot_password' %}">忘記密碼?</a>
+                                        </div>
+                                        <div class="text-center">
+                                            <a class="small" href="{% url 'register' %}">創建帳號!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'js/register.js' %}"></script>
+    <script src="{% static 'mode/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'mode/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'mode/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'mode/js/sb-admin-2.min.js' %}"></script>
+    
+    <script>
+        if (localStorage.getItem("rememberUsername") === "true") {
+            const rememberedUsername = localStorage.getItem("username");
+            document.getElementById("usernameField").value = rememberedUsername;
+            document.getElementById("rememberUsername").checked = true;
+        }
+    
+        if (localStorage.getItem("rememberMe") === "true") {
+            const rememberedUsername = localStorage.getItem("username");
+            const rememberedPassword = localStorage.getItem("password");
+            document.getElementById("usernameField").value = rememberedUsername;
+            document.getElementById("passwordField").value = rememberedPassword;
+            document.getElementById("rememberMe").checked = true;
+        }
+    
+        const form = document.querySelector("form.user");
+        form.addEventListener("submit", function(event) {
+            const rememberUsernameCheckbox = document.getElementById("rememberUsername");
+            const rememberMeCheckbox = document.getElementById("rememberMe");
+            if (rememberUsernameCheckbox.checked) {
+                const username = document.getElementById("usernameField").value;
+                localStorage.setItem("username", username);
+                localStorage.setItem("rememberUsername", "true");
+            } else {
+                localStorage.removeItem("username");
+                localStorage.setItem("rememberUsername", "false");
+            }
+    
+            if (rememberMeCheckbox.checked) {
+                const username = document.getElementById("usernameField").value;
+                const password = document.getElementById("passwordField").value;
+                localStorage.setItem("username", username);
+                localStorage.setItem("password", password);
+                localStorage.setItem("rememberMe", "true");
+            } else {
+                localStorage.removeItem("password");
+                localStorage.setItem("rememberMe", "false");
+            }
+        });
+    </script>
+{% endblock content %}
+
+

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+{% include 'partials/_messages.html' %}
+    <h1>Project List</h1>
+    <canvas id="myChart"></canvas>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'js/login_count_chart.js' %}"></script>
+    <p id="current-time"></p>
+    <script src="{% static 'js/your_script.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,38 @@
+.btn-primary {
+    position: relative;
+    z-index: 1;
+    top: 10px;
+}
+.invalid_feedback, .emailfeedBackArea{
+    color: red;
+    margin-top: 5px;
+}
+.passwordFeedbackArea {
+    color: red;
+    margin-top: 20px;
+}
+#checkEye {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+.input-group-append {
+    position: relative;
+    right: -300px;
+    top: 69%;
+    transform: translateY(-45%);
+    z-index: 2;
+
+}
+.passwordToggleBtn {
+    background-color: transparent;
+}
+
+.passwordToggleBtn:hover {
+    background-color: transparent;
+}
+
+.passwordToggleBtn:hover #togglePasswordIcon {
+    color: #007bff;
+}
